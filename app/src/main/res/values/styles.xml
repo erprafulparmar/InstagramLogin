@@ -1,0 +1,25 @@
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlHighlight">#CCcccccc</item>
+        <item name="colorControlNormal">@color/colorBlack</item>
+    </style>
+
+    <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorSplashPrimary</item>
+        <item name="colorPrimaryDark">@color/colorSplashPrimaryDark</item>
+        <item name="colorAccent">@color/colorBlack</item>
+        <item name="colorControlHighlight">#CCcccccc</item>
+        <item name="colorControlNormal">@color/colorBlack</item>
+    </style>
+
+    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/colorBlack</item>
+        <item name="android:textColor">@color/colorGrey</item>
+        <item name="colorControlNormal">@color/colorBlack</item>
+        <item name="colorControlActivated">@color/colorBlack</item>
+    </style>
+</resources>
