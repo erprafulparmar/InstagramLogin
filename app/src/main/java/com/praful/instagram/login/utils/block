@@ -1,0 +1,280 @@
+boolean GETSHOWANIMATION = PrefUtils.getShowAnimationBooleanPref(C2015X0RF.PRF_SHOW_ANIMATION, C20XDCTX);
+                        if (GETSHOWANIMATION)
+                        {
+                            float s_angle1 = (float) (ss * 6) + (6F * (float) ms) / 1000F;
+                            cDraw.rotate(s_angle1, displayWidth / 2, displayHeight / 2);
+                            cDraw.drawBitmap(bitmapSecond, displayWidth / 2 - bitmapSecond.getWidth() / 2, displayHeight / 2 - bitmapSecond.getHeight() / 2, mPaint);
+                        } else {
+                            SECOND_HAND = ss * 6;
+                            cDraw.rotate(SECOND_HAND, displayWidth / 2, displayHeight / 2);
+                            cDraw.drawBitmap(bitmapSecond, displayWidth / 2 - bitmapSecond.getWidth() / 2, displayHeight / 2 - bitmapSecond.getHeight() / 2, mPaint);
+                        }
+                        
+                        
+                        
+                        
+                        
+                        public class BitmapOverride {
+
+    private Context context;
+
+    public BitmapOverride(Context context1) {
+        this.context = context1;
+    }
+
+
+    public Bitmap D021X00BGXBMP() {
+        int backgroundPosition = PrefUtils.getIntPref(PrefUtils.PRF_BACKGROUND_POSITION, context);
+        int getBgPosition = ZXOO50014.ARRAY_BACKGROUNDS[backgroundPosition];
+        return BitmapFactory.decodeResource(context.getResources(), getBgPosition);
+    }
+
+    public int D021X00BGXRES() {
+        int backgroundPosition = PrefUtils.getIntPref(PrefUtils.PRF_BACKGROUND_POSITION, context);
+        return ZXOO50014.ARRAY_BACKGROUNDS[backgroundPosition];
+    }
+
+    public Bitmap D021X00DLBMP() {
+        int clockDialPosition = PrefUtils.getIntPref(PrefUtils.PRF_CLOCK_DIAL, context);
+        return BitmapFactory.decodeResource(context.getResources(), ZXOO50014.CLOCK_DIAL_IMAGES[clockDialPosition]);
+    }
+
+
+    public Bitmap D022X00HBMP() {
+        int clockHandStylePosition = PrefUtils.getIntPref(PrefUtils.PRF_HAND_STYLE_POSITION, context);
+        return BitmapFactory.decodeResource(context.getResources(), ZXOO50014.HOUR_HAND_IMAGES[clockHandStylePosition]);
+    }
+
+    public Bitmap D023X00MBMP() {
+        int clockHandStylePosition = PrefUtils.getIntPref(PrefUtils.PRF_HAND_STYLE_POSITION, context);
+        return BitmapFactory.decodeResource(context.getResources(), ZXOO50014.MINUTES_HAND_IMAGES[clockHandStylePosition]);
+    }
+
+    public Bitmap D024X00SBMP() {
+        int clockHandStylePosition = PrefUtils.getIntPref(PrefUtils.PRF_HAND_STYLE_POSITION, context);
+        return BitmapFactory.decodeResource(context.getResources(), ZXOO50014.SECOND_HAND_IMAGES[clockHandStylePosition]);
+    }
+
+
+    public Bitmap D024X00DGTMP() {
+        int digitStylePosition = PrefUtils.getIntPref(PrefUtils.PRF_DIGIT_STYLE_POSITION, context);
+        return BitmapFactory.decodeResource(context.getResources(), ZXOO50014.DT_IMAGES[digitStylePosition]);
+    }
+
+
+    public Bitmap D021X00RES(Bitmap bm, int newHeight, int newWidth) {
+        int width = bm.getWidth();
+        int height = bm.getHeight();
+        float scaleWidth = ((float) newWidth) / width;
+        float scaleHeight = ((float) newHeight) / height;
+        Matrix matrix = new Matrix();
+        matrix.postScale(scaleWidth, scaleHeight);
+        return Bitmap.createBitmap(bm, 0, 0, width, height, matrix, false);
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+package paris.nature.clock.lwp.ui;
+
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.os.Handler;
+import android.service.wallpaper.WallpaperService;
+import android.view.SurfaceHolder;
+import java.util.Calendar;
+import paris.nature.clock.lwp.commune.C2015X0RF;
+import paris.nature.clock.lwp.commune.bitmapOverridde;
+
+
+public class ClockServiceData extends WallpaperService {
+
+    ClockEngine clockEngine;
+
+    Context context;
+    Bitmap bitmapBackground;
+    Bitmap bitmapDial, bitmapHour, bitmapMinute, bitmapSecond;
+    Bitmap bitmapDigit;
+    BitmapOverride bitmapOverridde;
+
+    public static int displayWidth = 0;
+    public static int displayHeight = 0;
+
+    @Override
+    public Engine onCreateEngine()
+    {
+        context = this;
+        clockEngine = new ClockEngine();
+        bitmapOverridde = new bitmapOverridde(context);
+        settingPrefernceData(context);
+        return clockEngine;
+    }
+
+
+
+    private void settingPrefernceData(Context parentContext)
+    {
+        bitmapBackground = bitmapOverridde.D021X00BGXBMP();
+        bitmapDial = bitmapOverridde.D021X00DLBMP();
+        bitmapHour = bitmapOverridde.D022X00HBMP();
+        bitmapMinute = bitmapOverridde.D023X00MBMP();
+        bitmapSecond = bitmapOverridde.D024X00SBMP();
+        bitmapDigit = bitmapOverridde.D024X00DGTMP();
+        int intReSizer = C2015X0RF.getDataSize(C2015X0RF.PRF_CLOCK_SIZE, parentContext);
+        int OODX001 = getScaledTextSize(160 + intReSizer * 3);
+        bitmapDial = bitmapOverridde.D021X00RES(bitmapDial, OODX001, OODX001);
+        bitmapHour = bitmapOverridde.D021X00RES(bitmapHour, OODX001, OODX001);
+        bitmapMinute = bitmapOverridde.D021X00RES(bitmapMinute, OODX001, OODX001);
+        bitmapSecond = bitmapOverridde.D021X00RES(bitmapSecond, OODX001, OODX001);
+        bitmapDigit = bitmapOverridde.D021X00RES(bitmapDigit, OODX001, OODX001);
+    }
+
+
+
+    private class ClockEngine extends Engine
+    {
+        private final Handler handler = new Handler();
+        private Paint mPaint = new Paint();
+        private boolean enableDraw = true;
+        private final Runnable runnableState = new Runnable() {
+            @Override
+            public void run() {
+                draw();
+            }
+        };
+
+
+        public ClockEngine()
+        {
+            mPaint.setAntiAlias(true);
+            mPaint.setFilterBitmap(true);
+            mPaint.setDither(true);
+            handler.post(runnableState);
+        }
+
+
+        @Override
+        public void onVisibilityChanged(boolean visible) {
+            this.enableDraw = visible;
+            if (visible) {
+                handler.post(runnableState);
+            } else {
+                handler.removeCallbacks(runnableState);
+            }
+        }
+
+
+
+        @Override
+        public void onSurfaceDestroyed(SurfaceHolder holder) {
+            super.onSurfaceDestroyed(holder);
+            this.enableDraw = false;
+            handler.removeCallbacks(runnableState);
+        }
+
+        @Override
+        public void onSurfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+            ClockServiceData.displayWidth = width;
+            ClockServiceData.displayHeight = height;
+            bitmapBackground = Bitmap.createScaledBitmap(bitmapBackground, width, height, true);
+            super.onSurfaceChanged(holder, format, width, height);
+        }
+
+
+        private void draw() {
+            SurfaceHolder surfaceHolder = getSurfaceHolder();
+            int HOUR_HAND = 0, MINUTE_HAND = 0, SECOND_HAND = 0;
+            Canvas cDraw = null;
+            try {
+                boolean showDataBooleanPref = C2015X0RF.getShowDataBooleanPref(C2015X0RF.PRF_SHOW_DATA, context);
+                cDraw = surfaceHolder.lockCanvas();
+
+                if (cDraw != null)
+                {
+                    if (showDataBooleanPref)
+                    {
+                        C2015X0RF.putShowDataBooleanPref(C2015X0RF.PRF_SHOW_DATA, false, context);
+                        bitmapBackground = Bitmap.createScaledBitmap(bitmapOverridde.D021X00BGXBMP(), displayWidth, displayHeight, true);
+                        settingPrefernceData(context);
+                    }
+
+                    Calendar CA001L = Calendar.getInstance();
+                    int hh = CA001L.get(Calendar.HOUR);
+                    int mm = CA001L.get(Calendar.MINUTE);
+                    int ss = CA001L.get(Calendar.SECOND);
+                    int ms = CA001L.get(Calendar.MILLISECOND);
+
+                    cDraw.drawBitmap(bitmapBackground, 0, 0, mPaint);
+
+                    cDraw.drawBitmap(bitmapDial, displayWidth / 2 - bitmapDial.getWidth() / 2,
+                            displayHeight / 2 - bitmapDial.getHeight() / 2, mPaint);
+
+                    boolean showDtxEnable = C2015X0RF.getShowDigitbooleanPref(C2015X0RF.PRF_SHOW_DIGIT, context);
+                    if(showDtxEnable) {
+                        cDraw.drawBitmap(bitmapDigit, displayWidth / 2 - bitmapDigit.getWidth() / 2,
+                                displayHeight / 2 - bitmapDigit.getHeight() / 2, mPaint);
+                    }
+
+                    HOUR_HAND = hh * 30 + mm / 2;
+                    cDraw.rotate(HOUR_HAND, displayWidth / 2, displayHeight / 2);
+                    cDraw.drawBitmap(bitmapHour, displayWidth / 2 - bitmapHour.getWidth() / 2,
+                            displayHeight / 2 - bitmapHour.getHeight() / 2, mPaint);
+
+                    MINUTE_HAND = mm * 6 + ss / 10;
+                    MINUTE_HAND = MINUTE_HAND - HOUR_HAND;
+                    cDraw.rotate(MINUTE_HAND, displayWidth / 2, displayHeight / 2);
+                    cDraw.drawBitmap(bitmapMinute, displayWidth / 2 - bitmapMinute.getWidth() / 2,
+                            displayHeight / 2 - bitmapMinute.getHeight() / 2, mPaint);
+
+
+                    boolean GETSHOWSEC = C2015X0RF.getShowHandbooleanPref(C2015X0RF.PRF_SHOW_SECOND, context);
+                    if (GETSHOWSEC)
+                    {
+                        boolean GETSHOWANIMATION = C2015X0RF.getShowAnimationBooleanPref(C2015X0RF.PRF_SHOW_ANIMATION, context);
+                        if (GETSHOWANIMATION)
+                        {
+                            float s_angle1 = (float) (ss * 6) + (6F * (float) ms) / 1000F;
+                            cDraw.rotate(s_angle1, displayWidth / 2, displayHeight / 2);
+                            cDraw.drawBitmap(bitmapSecond, displayWidth / 2 - bitmapSecond.getWidth() / 2, displayHeight / 2 - bitmapSecond.getHeight() / 2, mPaint);
+                        } else {
+                            SECOND_HAND = ss * 6;
+                            cDraw.rotate(SECOND_HAND, displayWidth / 2, displayHeight / 2);
+                            cDraw.drawBitmap(bitmapSecond, displayWidth / 2 - bitmapSecond.getWidth() / 2, displayHeight / 2 - bitmapSecond.getHeight() / 2, mPaint);
+                        }
+                    }
+                }
+            } finally {
+                try {
+                    if (cDraw != null)
+                        surfaceHolder.unlockCanvasAndPost(cDraw);
+                } catch (IllegalArgumentException e) {
+                    e.printStackTrace();
+                }
+            }
+            handler.removeCallbacks(runnableState);
+            if (enableDraw) {
+                handler.postDelayed(runnableState, 10);
+            }
+        }
+    }
+
+  private int getScaledTextSize(float input) {
+        float scale = getResources().getDisplayMetrics().density;
+        return (int) (input * scale + 0.5f);
+
+    }
+}
