@@ -49,3 +49,59 @@ public class PrefUtil
         return preferences.getBoolean(key, false);
     }
 }
+
+
+
+split = strWord.split("#");
+        for (String s : split) {
+            Log.e("split", "===>" + s);
+            stringList.add(s);
+        }
+
+        for (int k = 0; k < stringList.size(); k++) {
+            StringBuilder stringBuilder=new StringBuilder();
+            String sValue = stringList.get(k);
+            if(k==0 || k==3)
+            {
+                int spaceCenter = (sValue.length() - 14) / 2;
+                spaceCenter= Math.abs(spaceCenter);
+                Log.e("space", "===>" + spaceCenter);
+
+                for(int box=0;box<spaceCenter;box++)
+                {
+                    Log.e("spaceCenter1", "===>" + spaceCenter);
+                    stringBuilder.append(" ");
+                }
+            }
+            else  if(k==1 || k==2)
+            {
+                int spaceCenter = (sValue.length() - 16) / 2;
+                spaceCenter= Math.abs(spaceCenter);
+                Log.e("space", "===>" + spaceCenter);
+                for(int box=0;box<spaceCenter;box++)
+                {
+                    stringBuilder.append(" ");
+                    Log.e("spaceCenter1", "===>" + spaceCenter);
+                }
+            }
+
+            HashMap<String, String> hashMap = new HashMap<>();
+            hashMap.put("key", String.valueOf(k));
+            hashMap.put("value", stringBuilder.append(sValue).toString());
+            finalWords.add(hashMap);
+        }
+
+
+        for (HashMap<String, String> list : finalWords) {
+            Log.e("key", "===>" + list.get("key"));
+            Log.e("value", "===>" + list.get("value"));
+            char[] values = list.get("value").toCharArray();
+            for(char cc:values)
+            {
+                Log.e("cc", "===>" + cc);
+
+                charsList.add(String.valueOf(cc));
+            }
+        }
+        Log.e("charsList", "===>" + charsList.size());
+
